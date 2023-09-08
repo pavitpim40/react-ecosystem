@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
 
@@ -33,11 +34,7 @@ function HomePage() {
     <div className='App'>
       <h1>Home Page</h1>
       {friend.map((f) => (
-        <div 
-				className='friend' 
-				key={f.id}
-				onClick={()=> handleNavigate(f.id)}
-				>
+        <div className='friend' key={f.id} onClick={() => handleNavigate(f.id)}>
           <h3>{f.name}</h3>
           <h5>
             {f.email}, {f.phone}
@@ -53,7 +50,31 @@ function ProfilePage() {
 }
 
 function FriendPage() {
-  return <div className='App'>Friend Page</div>;
+  const { userId } = useParams();
+  const [friend, setFriend] = useState(null);
+
+  const fetchFriendDetail = async () => {
+    try {
+      const { data } = await axios.get(`/users/${userId}`);
+      setFriend(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchFriendDetail();
+  }, []);
+  return (
+    <div className='App'>
+      {friend && (
+        <div className='friend'>
+          <h3>{friend.name}</h3>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function FeedPage() {
@@ -69,7 +90,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Routes>
       <Route path='/' element={<HomePage />} />
       <Route path='/profile' element={<ProfilePage />} />
-      <Route path='/profile/:id' element={<FriendPage />} />
+      <Route path='/profile/:userId' element={<FriendPage />} />
       <Route path='/feed' element={<FeedPage />} />
     </Routes>
   </BrowserRouter>
