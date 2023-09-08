@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './index.css';
@@ -81,6 +81,10 @@ function FeedPage() {
   return <div className='App'>Feed Page</div>;
 }
 
+function NotFoundPage() {
+  return <div className='App'>404 : Not Found</div>;
+}
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Link to='/'>home</Link>
@@ -92,6 +96,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/profile' element={<ProfilePage />} />
       <Route path='/profile/:userId' element={<FriendPage />} />
       <Route path='/feed' element={<FeedPage />} />
+      {/* <Route path='*' element={<NotFoundPage />} /> */}
+      <Route path='*' element={<Navigate to='/' />} />
     </Routes>
   </BrowserRouter>
 );
