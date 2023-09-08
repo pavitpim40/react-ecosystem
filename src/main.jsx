@@ -22,7 +22,12 @@ function App() {
       <Button variant='contained' color='success'>
         button
       </Button>
-      <Button variant='contained' color='error' onClick={() => alert('Clicked')}>
+      <Button
+        variant='contained'
+        color='error'
+        onClick={() => alert('Clicked')}
+        sx={{ padding: '10px', marginTop: '20px', borderRadius: '10px' }}
+      >
         button
       </Button>
     </div>
