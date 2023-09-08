@@ -25,6 +25,14 @@ function HomePage() {
   return (
     <div className='App'>
       <h1>Home Page</h1>
+      {friend.map((f) => (
+        <div className='friend' key={f.id}>
+          <h3>{f.name}</h3>
+          <h5>
+            {f.email}, {f.phone}
+          </h5>
+        </div>
+      ))}
     </div>
   );
 }
